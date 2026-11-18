@@ -1,0 +1,13 @@
+server: { port: 8082 }
+spring:
+  application: { name: inventory-service }
+  datasource: { url: jdbc:postgresql://localhost:5432/ecommerce, username: ecommerce, password: ecommerce }
+  jpa: { hibernate: { ddl-auto: update }, open-in-view: false }
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: inventory-service
+      auto-offset-reset: earliest
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties: { spring.json.value.default.type: "com.capstone.ecommerce.inventory.event.OrderCreatedEvent" }
+eureka: { client: { service-url: { defaultZone: http://localhost:8761/eureka/ } } }
